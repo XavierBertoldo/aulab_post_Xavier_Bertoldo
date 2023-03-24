@@ -28,13 +28,50 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <ul class="navbar-nav me-5 mb-2 mb-lg-0">
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                @else
+                    <li class="nav-item dropdown me-5">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ auth()->user()->name }}
+                        </a>
+                        <ul class="dropdown-menu me-5">
+                            {{-- <li class="dropdown-item text-end">
+                                <li class="dropdown-item text-end">
+                            <a class="nav-link" href="{{ route('categories.create') }}">Crea Categoria</a>
+                        </li> --}}
+                            <li class="dropdown-item">
+                                <a class="nav-link" href="{{ route('articles.create') }}">Crea Articolo</a>
+                            </li>
+                            <li class="dropdown-item">
+                                <form action="/logout" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="nav-link border-0 bg-transparent ">Logout</button>
+                                </form>
+                            </li>
+                    </li>
+                </ul>
+                </li>
+            @endguest
+            </ul>
+
+
+
         </div>
+
     </div>
 </nav>

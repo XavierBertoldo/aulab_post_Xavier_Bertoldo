@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,4 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+//PUBLIC CONTROLLER
 Route::get('/', [PublicController::class, 'homepage'])->name('homepage');
+
+
+//ARTICLE CONTROLLER
+Route::resource('articles', ArticleController::class)->middleware('auth')->except('index', 'show');

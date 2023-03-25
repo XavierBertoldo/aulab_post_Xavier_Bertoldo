@@ -21,4 +21,8 @@ Route::get('/', [PublicController::class, 'homepage'])->name('homepage');
 
 
 //ARTICLE CONTROLLER
-Route::resource('articles', ArticleController::class)->middleware('auth')->except('index', 'show');
+Route::resource('articles', ArticleController::class);
+Route::get('/article/category/{category}', [ArticleController::class, 'byCategory'])->name('articles.byCategory');
+Route::get('/article/auth', [ArticleController::class, 'ArticleAuth'])->name('articles.auth');
+Route::get('/article/{user}',[ArticleController::class,'byUser'])->name('article.byUser');
+

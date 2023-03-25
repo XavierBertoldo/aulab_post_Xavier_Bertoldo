@@ -1,14 +1,14 @@
 <x-main>
-    <x-slot name="title">The Aulab Post|Home</x-slot>
-    <div class="mt-2">
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
+    <x-slot name="title">{{$category->name}}</x-slot>
+    <div class="container-fluid p-5 text-center ">
+        <div class="row justify-content-center">
+            <h1 class="mt-5">
+                {{$category->name}}
+            </h1>
+        </div>
     </div>
-    <div class="container my-5 shadow min-vh-100 ">
-        <div class="row justify-content-around ">
+    <div class="container my-5 shadow min-vh-100">
+        <div class="row justify-content-around">
             @foreach ($articles as $article)
                 <div class="col-12 col-md-3 d-flex mt-3 ">
                     <div class="card">

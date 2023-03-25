@@ -11,7 +11,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('homepage') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="{{route('articles.index')}}">Articoli</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -49,18 +49,16 @@
                             {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu me-5">
-                            {{-- <li class="dropdown-item text-end">
-                                <li class="dropdown-item text-end">
-                            <a class="nav-link" href="{{ route('categories.create') }}">Crea Categoria</a>
-                        </li> --}}
+                                <li class="dropdown-item ">
+                            <a class="nav-link" href="{{ route('articles.auth') }}">Gestione Articoli</a>
+                        </li>
                             <li class="dropdown-item">
                                 <a class="nav-link" href="{{ route('articles.create') }}">Crea Articolo</a>
                             </li>
                             <li class="dropdown-item">
                                 <form action="/logout" method="POST">
-                                    @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="nav-link border-0 bg-transparent ">Logout</button>
+                                    <button type="submit" class="dropdown-item btn  ">Logout</button>
                                 </form>
                             </li>
                     </li>

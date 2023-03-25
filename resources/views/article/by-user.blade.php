@@ -1,16 +1,17 @@
 <x-main>
-    <x-slot name="title">The Aulab Post|Home</x-slot>
-    <div class="mt-2">
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
+    <x-slot name="title">Articoli di {{$user->name}}</x-slot>
+    <div class="container-fluid p-5 text-center">
+        <div class="row justify-content-center">
+            <h1 class="mt-5">
+                Tutti gli articoli di {{$user->name}}
+            </h1>
+        </div>
     </div>
-    <div class="container my-5 shadow min-vh-100 ">
-        <div class="row justify-content-around ">
+
+    <div class="container my-5 shadow min-vh-100">
+        <div class="row justify-content-around">
             @foreach ($articles as $article)
-                <div class="col-12 col-md-3 d-flex mt-3 ">
+                <div class="col-12 col-md-3 d-flex mt-3">
                     <div class="card">
                         <img src="{{ Storage::url($article->image) }}" alt="immagine non presente" class="card-img-top">
                         <div class="card-body">
@@ -20,8 +21,7 @@
                                 class="small text-muted fst-italic text-capitalize">{{ $article->category->name }}</a>
                         </div>
                         <div class="card-footer text-muted d-flex justify-content-between align-items-center">
-                            Scritto il {{ $article->created_at->format('d/m/Y') }} da <a
-                                href="{{ route('article.byUser',  $article->user->id) }}">{{ $article->user->name }}</a>
+                            Scritto il {{ $article->created_at->format('d/m/Y') }}
                         </div>
                         <div class="w-100 text-center my-2">
                             <a href="{{ route('articles.show', $article) }}"

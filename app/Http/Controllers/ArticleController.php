@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,9 +13,15 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show', 'byCategory', 'byUser');
+    }
+
     public function index()
     {
-        //
+        $articles = Article::orderBy('created_at', 'desc')->get();
+        return view('article.index', compact('articles'));
     }
 
     /**
@@ -55,7 +63,26 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return view('article.show', compact('article'));
+    }
+
+    public function byCategory(Category $category)
+    {
+        $articles = $category->articles->sortByDesc('created_at');
+        return view('article.by-category', compact('category', 'articles'));
+    }
+
+    public function byUser(User $user)
+    {
+
+        $articles = $user->articles->sortByDesc('created_at');
+        return view('article.by-user', compact('articles', 'user'));
+    }
+
+    public function ArticleAuth()
+    {
+        $articles = Auth::user()->articles;
+        return view('article.auth', compact('articles'));
     }
 
     /**
@@ -63,7 +90,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('article.edit', compact('article'));
     }
 
     /**
@@ -71,7 +98,8 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $article->fill($request->all())->save();
+        return redirect()->route('articles.auth')->with(['success' => 'Articolo modificato con successo']);
     }
 
     /**
@@ -79,6 +107,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->delete();
+
+        return redirect()->route('articles.index')->with(['success' => 'Articolo eliminato  con successo']);
     }
 }

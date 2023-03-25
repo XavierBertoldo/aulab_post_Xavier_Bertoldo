@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\RevisorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,11 +20,46 @@ use Illuminate\Support\Facades\Route;
 
 //PUBLIC CONTROLLER
 Route::get('/', [PublicController::class, 'homepage'])->name('homepage');
+//careers
+Route::get('/careers', [PublicController::class, 'careers'])->name('careers')->middleware('auth');
+Route::post('/careers/submit', [PublicController::class, 'careersSubmit'])->name('careers.submit')->middleware('auth');
 
 
 //ARTICLE CONTROLLER
 Route::resource('articles', ArticleController::class);
 Route::get('/article/category/{category}', [ArticleController::class, 'byCategory'])->name('articles.byCategory');
 Route::get('/article/auth', [ArticleController::class, 'ArticleAuth'])->name('articles.auth');
-Route::get('/article/{user}',[ArticleController::class,'byUser'])->name('article.byUser');
+Route::get('/article/{user}', [ArticleController::class, 'byUser'])->name('article.byUser');
 
+
+//ADMIN CONTROLLER
+Route::middleware('admin')->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    // admin 
+    Route::get('/admin/{user}/set-admin', [AdminController::class, 'setAdmin'])->name('admin.setAdmin');
+    Route::get('/admin/{user}/reject-admin', [AdminController::class, 'rejectAdmin'])->name('admin.rejectAdmin');
+
+    // revisor
+    Route::get('/admin/{user}/set-revisor', [AdminController::class, 'setRevisor'])->name('admin.setRevisor');
+    Route::get('/admin/{user}/reject-revisor', [AdminController::class, 'rejectRevisor'])->name('admin.rejectRevisor');
+
+    //writer
+    Route::get('/admin/{user}/set-writer', [AdminController::class, 'setWriter'])->name('admin.setWriter');
+    Route::get('/admin/{user}/reject-writer', [AdminController::class, 'rejectWriter'])->name('admin.rejectWriter');
+});
+
+
+//REVISOR CONTROLLER
+Route::middleware('revisor')->group(function () {
+    Route::get('/revisor/dashboard', [RevisorController::class, 'dashboard'])->name('revisor.dashboard');
+
+    // accept
+    Route::get('/revisor/{article}/accept', [RevisorController::class, 'acceptArticle'])->name('revisor.acceptArticle');
+
+    // reject
+    Route::get('/revisor/{article}/reject', [RevisorController::class, 'rejectArticle'])->name('revisor.rejectArticle');
+
+    // undo
+    Route::get('/revisor/{article}/undo', [RevisorController::class, 'undoArticle'])->name('revisor.undoArticle');
+});

@@ -11,7 +11,10 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('homepage') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('articles.index')}}">Articoli</a>
+                    <a class="nav-link" href="{{ route('articles.index') }}">Articoli</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('careers') }}">Lavora con noi</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -49,12 +52,26 @@
                             {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu me-5">
+                            @if (Auth::user()->is_admin)
                                 <li class="dropdown-item ">
-                            <a class="nav-link" href="{{ route('articles.auth') }}">Gestione Articoli</a>
-                        </li>
-                            <li class="dropdown-item">
-                                <a class="nav-link" href="{{ route('articles.create') }}">Crea Articolo</a>
+                                    <a class="nav-link" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                                </li>
+                            @endif
+
+                            @if (Auth::user()->is_revisor)
+                                <li class="dropdown-item ">
+                                    <a class="nav-link" href="{{ route('revisor.dashboard') }}">Revisor Dashboard</a>
+                                </li>
+                            @endif
+                            @if (Auth::user()->is_writer)
+                            <li class="dropdown-item ">
+                                <a class="nav-link" href="{{ route('articles.auth') }}">Gestione Articoli</a>
                             </li>
+                            
+                                <li class="dropdown-item">
+                                    <a class="nav-link" href="{{ route('articles.create') }}">Crea Articolo</a>
+                                </li>
+                            @endif
                             <li class="dropdown-item">
                                 <form action="/logout" method="POST">
                                     @csrf

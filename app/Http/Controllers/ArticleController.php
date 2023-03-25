@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\User;
@@ -16,11 +17,12 @@ class ArticleController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except('index', 'show', 'byCategory', 'byUser');
+        $this->middleware('writer')->except('index', 'show', 'byCategory', 'byUser', 'articleAuth', 'edit', 'update', 'destroy');
     }
 
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->get();
+        $articles = Article::where('is_accepted', true)->orderBy('created_at', 'desc')->get();
         return view('article.index', compact('articles'));
     }
 
@@ -68,14 +70,18 @@ class ArticleController extends Controller
 
     public function byCategory(Category $category)
     {
-        $articles = $category->articles->sortByDesc('created_at');
+        $articles = $category->articles->sortByDesc('created_at')->filter(function ($article) {
+            return $article->is_accepted == true;
+        });
         return view('article.by-category', compact('category', 'articles'));
     }
 
     public function byUser(User $user)
     {
 
-        $articles = $user->articles->sortByDesc('created_at');
+        $articles = $user->articles->sortByDesc('created_at')->filter(function ($article) {
+            return $article->is_accepted == true;
+        });
         return view('article.by-user', compact('articles', 'user'));
     }
 

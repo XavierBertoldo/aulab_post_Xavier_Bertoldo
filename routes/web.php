@@ -63,3 +63,6 @@ Route::middleware('revisor')->group(function () {
     // undo
     Route::get('/revisor/{article}/undo', [RevisorController::class, 'undoArticle'])->name('revisor.undoArticle');
 });
+
+//SCOUT
+Route::get('\article\search',[ArticleController::class,'articleSearch'])->name('article.search');

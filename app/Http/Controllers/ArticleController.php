@@ -117,4 +117,11 @@ class ArticleController extends Controller
 
         return redirect()->route('articles.index')->with(['success' => 'Articolo eliminato  con successo']);
     }
+
+    public function articleSearch(Request $request)
+    {
+        $query = $request->input('query');
+        $articles = Article::search($query)->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+        return view('article.search-index', compact('articles', 'query'));
+    }
 }

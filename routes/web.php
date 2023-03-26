@@ -47,6 +47,15 @@ Route::middleware('admin')->group(function () {
     //writer
     Route::get('/admin/{user}/set-writer', [AdminController::class, 'setWriter'])->name('admin.setWriter');
     Route::get('/admin/{user}/reject-writer', [AdminController::class, 'rejectWriter'])->name('admin.rejectWriter');
+
+    //tags
+    Route::put('/admin/edit/{tag}/tag', [AdminController::class, 'editTag'])->name('admin.editTag');
+    Route::delete('/admin/delete/{tag}/tag', [AdminController::class, 'deleteTag'])->name('admin.deleteTag');
+
+    //categorie
+    Route::put('/admin/edit/{category}/category', [AdminController::class, 'editCategory'])->name('admin.editCategory');
+    Route::delete('/admin/delete/{category}/category', [AdminController::class, 'deleteCategory'])->name('admin.deleteCategory');
+    Route::post('/admin/category/store', [AdminController::class, 'storeCategory'])->name('admin.storeCategory');
 });
 
 
@@ -65,4 +74,4 @@ Route::middleware('revisor')->group(function () {
 });
 
 //SCOUT
-Route::get('\article\search',[ArticleController::class,'articleSearch'])->name('article.search');
+Route::get('\article\search', [ArticleController::class, 'articleSearch'])->name('article.search');

@@ -20,7 +20,8 @@
                     </div>
                 @endif
 
-                <form class="card p-5 shadow border-0" action="{{ route('articles.update', $article) }}" method="POST" enctype="multipart/form-data">
+                <form class="card p-5 shadow border-0" action="{{ route('articles.update', $article) }}" method="POST"
+                    enctype="multipart/form-data">
                     @method('patch')
                     @csrf
                     {{-- Categoria --}}
@@ -28,7 +29,8 @@
                         <label for="category">Categoria:</label>
                         <select name="category" id="category" class="form-control text-capitalize">
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" @if ($article->category && $category->id) selected @endif>
+                                    {{ $category->name }}</option>
                             @endforeach
                         </select>
 
@@ -52,6 +54,14 @@
                         <label for="body">Corpo del testo:</label>
                         <textarea type="text" name="body" cols="30" rows="7" class="form-control" id="body">{{ $article->body }}</textarea>
 
+                    </div>
+
+                    {{-- Tags --}}
+                    <div class="mb-3">
+                        <label for="tags" class="form-label">Tags:</label>
+                        <input name="tags" class="form-control" id="tags"
+                            value="{{ $article->tags->implode('name', ', ') }}">
+                        <span class="small fst-italic">Dividi ogni tag con una virgola</span>
                     </div>
 
                     {{-- Immagine --}}

@@ -16,9 +16,33 @@
                         <img src="{{ Storage::url($article->image) }}" alt="immagine non presente" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">{{ $article->title }}</h5>
-                            <p-card-text>{{ $article->subtitle }}</p-card-text>
-                            <a href="{{ route('articles.byCategory', ['category' => $article->category->id]) }}"
-                                class="small text-muted fst-italic text-capitalize">{{ $article->category->name }}</a>
+                            <p class="card-text">{{ $article->subtitle }}</p>
+                            @if ($article->category)
+                                <p>
+                                    <a
+                                        href="{{ route('articles.byCategory', ['category' => $article->category->id]) }}"class="small text-muted fst-italic text-capitalize">
+                                        {{ $article->category->name }}
+                                    </a>
+                                </p>
+                            @else
+                                <p class="small text-muted fst-italic text-capitalize">
+                                    Non Categorizzato
+                                </p>
+                            @endif
+                        </div>
+                        <div>
+                            <p class="small fst-italic text-capitalize text-center bg-light mb-0 py-2">
+                                @if (count($article->tags) > 2)
+                                    @foreach ($article->tags->take(2) as $tag)
+                                        #{{ $tag->name }} 
+                                    @endforeach
+                                    ...
+                                @else
+                                    @foreach ($article->tags as $tag)
+                                        #{{ $tag->name }}
+                                    @endforeach
+                                @endif
+                            </p>
                         </div>
                         <div class="card-footer text-muted d-flex justify-content-between align-items-center">
                             Scritto il {{ $article->created_at->format('d/m/Y') }}

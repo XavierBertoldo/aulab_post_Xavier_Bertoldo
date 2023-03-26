@@ -48,10 +48,6 @@
             @if (is_null($article->is_accepted))
                 <div class="row">
                     <div class="col text-center">
-                        <a href="{{ route('articles.show', $article) }}" class="btn btn-info text-white">Leggi
-                            l'articolo</a>
-                    </div>
-                    <div class="col text-center">
                         <a href="{{ route('revisor.acceptArticle', $article) }}"
                             class="btn btn-success text-white">Accetta</a>
                     </div>

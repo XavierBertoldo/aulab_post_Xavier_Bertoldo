@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -114,7 +115,38 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        $article->fill($request->all())->save();
+        $request->validate([
+            'title' => 'required|min:5|unique:articles,title,' . $article->id,
+            'subtitle' => 'required|min:5|unique:articles,subtitle,' . $article->id,
+            'body' => 'required|min:10',
+            'image' => 'image',
+            'category' => 'required',
+            'tags' => 'required',
+        ]);
+
+        $article->update([
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'body' => $request->body,
+            'category' => $request->category,
+        ]);
+
+        if ($request->image) {
+            Storage::delete($article->image);
+            $article->update([
+                'image' => $request->file('image')->store('public/images'),
+            ]);
+        }
+        $tags = explode(', ', $request->tags);
+        foreach ($tags as $tag) {
+
+            $newTag = Tag::updateOrCreate([
+                'name' => $tag,
+            ]);
+            $newTags[] = $newTag->id;
+        }
+        $article->tags()->sync($newTags);
+
         return redirect()->route('articles.auth')->with(['success' => 'Articolo modificato con successo']);
     }
 
@@ -123,9 +155,14 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        foreach($article->tags as $tag){
+            $article->tags()->detach($tag);
+        }
+
+
         $article->delete();
 
-        return redirect()->route('articles.index')->with(['success' => 'Articolo eliminato  con successo']);
+        return redirect()->route('articles.auth')->with(['success' => 'Articolo eliminato  con successo']);
     }
 
     public function articleSearch(Request $request)

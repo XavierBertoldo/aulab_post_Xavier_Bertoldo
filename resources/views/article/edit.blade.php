@@ -26,32 +26,35 @@
                     @csrf
                     {{-- Categoria --}}
                     <div class="mb-3">
-                        <label for="category">Categoria:</label>
+                        <label for="category" class="form-label">Categoria:</label>
                         <select name="category" id="category" class="form-control text-capitalize">
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" @if ($article->category && $category->id) selected @endif>
-                                    {{ $category->name }}</option>
+                                <option value="{{ $category->id }}" @if($article->category && $category->id == $article->category->id) selected @endif>
+                                    {{ $category->name }}
+                                </option>
                             @endforeach
                         </select>
 
                     </div>
 
-                    {{-- TItolo --}}
+                    {{-- Titolo --}}
                     <div class="mb-3">
-                        <label for="title">Titolo:</label>
+                        <label for="title" class="form-label">Titolo:</label>
                         <input type="text" name="title" class="form-control" id="title"
                             value="{{ $article->title }}">
                     </div>
 
                     {{-- SottoTitolo --}}
                     <div class="mb-3">
-                        <label for="subtitle">Sottotitolo:</label>
+                        <label for="subtitle" class="form-label">Sottotitolo:</label>
                         <input type="text" name="subtitle" class="form-control" id="subtitle"
                             value="{{ $article->subtitle }}">
                     </div>
+
+
                     {{-- Testo --}}
                     <div class="mb-3">
-                        <label for="body">Corpo del testo:</label>
+                        <label for="body" class="form-label">Corpo del testo:</label>
                         <textarea type="text" name="body" cols="30" rows="7" class="form-control" id="body">{{ $article->body }}</textarea>
 
                     </div>
@@ -66,7 +69,7 @@
 
                     {{-- Immagine --}}
                     <div class="mb-3">
-                        <label for="image">Immagine:</label>
+                        <label for="image" class="form-label">Immagine:</label>
                         <input type="file" name="image" class="form-control" id="image">
                     </div>
 

@@ -20,8 +20,7 @@ class ArticleController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('index', 'show', 'byCategory', 'byUser');
-        $this->middleware('writer')->except('index', 'show', 'byCategory', 'byUser');
+        $this->middleware(['auth', 'writer', 'verified'])->except('index', 'show', 'byCategory', 'byUser');
     }
 
     public function index()
@@ -50,7 +49,7 @@ class ArticleController extends Controller
             'image' => 'required|image',
             'category' => 'required',
             'tags' => 'required',
-            
+
         ]);
 
         $article = Article::create([
@@ -60,7 +59,7 @@ class ArticleController extends Controller
             'image' => $request->file('image')->store('public/images'),
             'category_id' => $request->category,
             'user_id' => Auth::user()->id,
-            'slug'=> Str::slug($request->title),
+            'slug' => Str::slug($request->title),
         ]);
 
         $tags = explode(', ', $request->tags);
@@ -126,7 +125,7 @@ class ArticleController extends Controller
             'image' => 'image',
             'category' => 'required',
             'tags' => 'required',
-            
+
         ]);
 
         $article->update([
@@ -134,7 +133,8 @@ class ArticleController extends Controller
             'subtitle' => $request->subtitle,
             'body' => $request->body,
             'category' => $request->category,
-            'slug'=> Str::slug($request->title),
+            'slug' => Str::slug($request->title),
+            'is_accepted' => NULL,
         ]);
 
         if ($request->image) {
@@ -161,7 +161,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        foreach($article->tags as $tag){
+        foreach ($article->tags as $tag) {
             $article->tags()->detach($tag);
         }
 

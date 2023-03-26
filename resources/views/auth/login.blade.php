@@ -1,11 +1,9 @@
 <x-main>
     <x-slot name="title">Accedi</x-slot>
-    <h1 class="text-center mt-5">Accedi</h1>
-
-    <div class="container mt-5">
+    <div class="container mt-5 shadow mb-5">
         <div class="row">
             <div class="col-6 mx-auto">
-                <h1 class="mb-5">Accedi</h1>
+                <h1 class="my-3 text-center">Accedi</h1>
                 @if (session()->has('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}
@@ -35,8 +33,8 @@
                             <a href="/forgot-password">hai dimenticato la passowrd?</a>
                         </div>
 
-                        <div>
-                            <button type="submit" class="btn btn-primary">Accedi</button>
+                        <div class="mb-5">
+                            <button type="submit " class="btn btn-primary">Accedi</button>
                         </div>
                     </div>
                 </form>
@@ -44,3 +42,4 @@
         </div>
     </div>
 </x-main>
+

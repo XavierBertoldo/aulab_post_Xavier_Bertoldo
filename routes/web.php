@@ -33,7 +33,7 @@ Route::get('/article/{user}', [ArticleController::class, 'byUser'])->name('artic
 
 
 //ADMIN CONTROLLER
-Route::middleware('admin')->group(function () {
+Route::middleware(['admin', 'verified'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // admin 
@@ -60,7 +60,7 @@ Route::middleware('admin')->group(function () {
 
 
 //REVISOR CONTROLLER
-Route::middleware('revisor')->group(function () {
+Route::middleware(['revisor', 'verified'])->group(function () {
     Route::get('/revisor/dashboard', [RevisorController::class, 'dashboard'])->name('revisor.dashboard');
 
     // accept

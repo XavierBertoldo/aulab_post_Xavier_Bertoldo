@@ -8,10 +8,10 @@
         </div>
     </div>
 
-    <div class="container my-5 shadow min-vh-100">
-        <div class="row justify-content-around">
-            @foreach ($articles as $article)
-                <div class="col-12 col-md-3 d-flex mt-3">
+    <div class="container my-5 shadow min-vh-100 ">
+        <div class="row justify-content-around ">
+            @forelse ($articles as $article)
+                <div class="col-12 col-md-3 d-flex mt-3 ">
                     <div class="card">
                         <img src="{{ Storage::url($article->image) }}" alt="immagine non presente" class="card-img-top">
                         <div class="card-body">
@@ -34,7 +34,7 @@
                             <p class="small fst-italic text-capitalize text-center bg-light mb-0 py-2">
                                 @if (count($article->tags) > 2)
                                     @foreach ($article->tags->take(2) as $tag)
-                                        #{{ $tag->name }} 
+                                        #{{ $tag->name }}
                                     @endforeach
                                     ...
                                 @else
@@ -48,7 +48,8 @@
                             Scritto il {{ $article->created_at->format('d/m/Y') }}
                         </div>
                         <div class="ps-2 bg-light">
-                            <span class="text-muted small fst-italic">- tempo di lettura {{$article->readDuration()}} min</span>
+                            <span class="text-muted small fst-italic">- tempo di lettura {{ $article->readDuration() }}
+                                min</span>
                         </div>
                         <div class="w-100 text-center my-2">
                             <a href="{{ route('articles.show', $article) }}"
@@ -58,7 +59,15 @@
 
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="container my-5 shadow min-vh-100 ">
+                    <div class="text-center p-5 shadow bg-light ">
+                        <h2>Non Sono ancora stati inseriti articoli, sii tu il primo fatti avanti e clicca qui:</h2>
+                        <a href="{{ route('articles.create') }}" class="btn btn-outline-info">Crea articolo</a>
+                    </div>
+                </div>
+            @endforelse
+
         </div>
     </div>
 </x-main>

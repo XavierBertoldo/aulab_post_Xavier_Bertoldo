@@ -47,6 +47,9 @@
                         <div class="card-footer text-muted d-flex justify-content-between align-items-center">
                             Scritto il {{ $article->created_at->format('d/m/Y') }}
                         </div>
+                        <div class="ps-2 bg-light">
+                            <span class="text-muted small fst-italic">- tempo di lettura {{$article->readDuration()}} min</span>
+                        </div>
                         <div class="w-100 text-center my-2">
                             <a href="{{ route('articles.show', $article) }}"
                                 class="btn btn-info text-white w-50">Leggi</a>

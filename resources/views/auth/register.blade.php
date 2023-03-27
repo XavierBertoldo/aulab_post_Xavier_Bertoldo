@@ -1,7 +1,7 @@
 <x-main>
     <x-slot name="title">Registrati</x-slot>
-    <h1 class="text-center mt-5">Registrati</h1>
-    <div class="container mt-5">
+    <div class="container mt-5 shadow pb-5">
+        <h1 class="text-center mt-5">Registrati</h1>
         <div class="row">
             <div class="col-6 mx-auto">
                 @if ($errors->any())

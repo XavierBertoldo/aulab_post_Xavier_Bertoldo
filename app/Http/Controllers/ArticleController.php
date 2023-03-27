@@ -20,7 +20,7 @@ class ArticleController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'writer', 'verified'])->except('index', 'show', 'byCategory', 'byUser');
+        $this->middleware(['auth', 'writer', 'verified'])->except('index', 'show', 'byCategory', 'byUser','articleSearch');
     }
 
     public function index()

@@ -7,7 +7,7 @@
             </div>
         @endif
     </div>
-    <div class="container my-5 shadow min-vh-100 ">
+    <div class="container my-5 min-vh-100 shadow ">
         <div class="row justify-content-around ">
             @forelse ($articles as $article)
                 <div class="col-12 col-md-3 d-flex mt-3 ">
@@ -60,12 +60,10 @@
                     </div>
                 </div>
             @empty
-                <div class="container my-5 shadow min-vh-100 ">
                     <div class="text-center p-5 shadow bg-light ">
                         <h2>Non Sono ancora stati inseriti articoli, sii tu il primo fatti avanti e clicca qui:</h2>
                         <a href="{{ route('articles.create') }}" class="btn btn-outline-info">Crea articolo</a>
                     </div>
-                </div>
             @endforelse
 
         </div>

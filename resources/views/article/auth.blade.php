@@ -8,9 +8,11 @@
             @if (session()->has('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
+
         </div>
     </div>
     <div class="container my-5 shadow min-vh-100">
+
         <ul>
             <div class="row fw-bold display-6 mb-3">
                 <div class="col text-center ">
@@ -27,6 +29,9 @@
                 </div>
                 <div class="col text-center ">
                     <p>#</p>
+                </div>
+                <div class="col text-center ">
+                    <p>Status</p>
                 </div>
             </div>
             @foreach ($articles as $article)
@@ -58,6 +63,15 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger my-1 ">elimina</button>
                         </form>
+                    </div>
+                    <div class="col text-center align-self-center  ">
+                        @if ($article->is_accepted)
+                            <span class="position-absolute translate-middle p-4 bg-success rounded-circle"> </span>
+                        @elseif($article->is_accepted === null)
+                            <span class="position-absolute translate-middle p-4 bg-warning rounded-circle"></span>
+                        @else
+                            <span class="position-absolute translate-middle p-4 bg-danger rounded-circle"></span>
+                        @endif
                     </div>
                 </div>
             @endforeach

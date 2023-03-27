@@ -11,7 +11,7 @@
 
     <div class="container my-5 shadow min-vh-100 ">
         <div class="row justify-content-around ">
-            @foreach ($articles as $article)
+            @forelse ($articles as $article)
                 <div class="col-12 col-md-3 d-flex mt-3 ">
                     <div class="card">
                         <img src="{{ Storage::url($article->image) }}" alt="immagine non presente" class="card-img-top">
@@ -35,7 +35,7 @@
                             <p class="small fst-italic text-capitalize text-center bg-light mb-0 py-2">
                                 @if (count($article->tags) > 2)
                                     @foreach ($article->tags->take(2) as $tag)
-                                        #{{ $tag->name }} 
+                                        #{{ $tag->name }}
                                     @endforeach
                                     ...
                                 @else
@@ -50,7 +50,8 @@
                                 href="{{ route('article.byUser', $article->user->id) }}">{{ $article->user->name }}</a>
                         </div>
                         <div class="ps-2 bg-light">
-                            <span class="text-muted small fst-italic">- tempo di lettura {{$article->readDuration()}} min</span>
+                            <span class="text-muted small fst-italic">- tempo di lettura {{ $article->readDuration() }}
+                                min</span>
                         </div>
                         <div class="w-100 text-center my-2">
                             <a href="{{ route('articles.show', $article) }}" class="btn btn-info text-white w-50">
@@ -61,7 +62,13 @@
 
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="text-center p-5 shadow bg-light ">
+                    <h2>La ricerca non ha prodotto nessun risultato controlla di non aver fatto errori</h2>
+                    <p> hai tu un articolo da vendere non aspettare clicca qui sotto <br> ↓↓↓↓↓↓</p>
+                    <a href="{{ route('articles.create') }}" class="btn btn-outline-info">Crea articolo</a>
+                </div>
+            @endforelse
         </div>
     </div>
 

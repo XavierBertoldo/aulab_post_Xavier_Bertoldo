@@ -20,9 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 //PUBLIC CONTROLLER
 Route::get('/', [PublicController::class, 'homepage'])->name('homepage');
-//careers
-Route::get('/careers', [PublicController::class, 'careers'])->name('careers')->middleware('auth');
-Route::post('/careers/submit', [PublicController::class, 'careersSubmit'])->name('careers.submit')->middleware('auth');
 
 
 //ARTICLE CONTROLLER
@@ -35,6 +32,10 @@ Route::get('/article/{user}', [ArticleController::class, 'byUser'])->name('artic
 //ADMIN CONTROLLER
 Route::middleware(['admin', 'verified'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    //careers
+    Route::get('/careers', [PublicController::class, 'careers'])->name('careers');
+    Route::post('/careers/submit', [PublicController::class, 'careersSubmit'])->name('careers.submit');
 
     // admin 
     Route::get('/admin/{user}/set-admin', [AdminController::class, 'setAdmin'])->name('admin.setAdmin');

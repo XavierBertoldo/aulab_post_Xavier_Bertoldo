@@ -6,7 +6,7 @@
             </h5>
             <ul class="navbar-nan">
                 <li class="nav-link">
-                    contattaci: <a class="nav-link d-inline" href="tel:+3903022345">03022345</a>
+                    contattaci: <a class="nav-link d-inline" href="tel:+3955522345">55522345</a>
                 </li>
                 <li class="nav-link">
                     P.IVA: IT023065502306550023215605060

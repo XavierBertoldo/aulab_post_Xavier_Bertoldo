@@ -28,14 +28,14 @@ Route::get('/article/category/{category}', [ArticleController::class, 'byCategor
 Route::get('/article/auth', [ArticleController::class, 'ArticleAuth'])->name('articles.auth');
 Route::get('/article/{user}', [ArticleController::class, 'byUser'])->name('article.byUser');
 
+//careers
+Route::get('/careers', [PublicController::class, 'careers'])->name('careers')->middleware('verified');
+Route::post('/careers/submit', [PublicController::class, 'careersSubmit'])->name('careers.submit')->middleware('verified');
 
 //ADMIN CONTROLLER
 Route::middleware(['admin', 'verified'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-    //careers
-    Route::get('/careers', [PublicController::class, 'careers'])->name('careers');
-    Route::post('/careers/submit', [PublicController::class, 'careersSubmit'])->name('careers.submit');
 
     // admin 
     Route::get('/admin/{user}/set-admin', [AdminController::class, 'setAdmin'])->name('admin.setAdmin');
